@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FamilyTree {
-    private List<Human> familyTreeList = new ArrayList<>(); /* На 1 уроке в проекте автомата поля были просто с объявлением листа, а сама инициализация была отдельным конструктором ниже.
-    Но у меня выходят ошибки. Зато если объявить прям в классе, как я сделал в 7 строчке - никаких проблем */
+    private List<Human> familyTreeList = new ArrayList<>();
 
-//    public FamilyTree() {   // Вот с этим конструктором проблема, описанная выше, он не работает, получается
-//        List<Human> familyTreeList = new ArrayList<>();
-//    }
+    public void addHumansInFamTree(Human... human) {
+        for (Human fam: human) {
+            familyTreeList.add(fam);
+        }
 
-    public void addHumanInFamTree(Human human){
-        familyTreeList.add(human);
     }
 
     public Human findHuman(String firstName){

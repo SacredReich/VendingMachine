@@ -9,40 +9,39 @@ public class Human {
     private String lastName;
     private Gender gender;
     private LocalDate dob, dod;
-
     private List<Human> childsArray;
+    private List<Human> parentsArray;
 
     public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.dod = dod;
+        this.gender = gender;
         this.childsArray = new ArrayList<>();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.dod = dod;
-        this.gender = gender;
+        this.parentsArray = new ArrayList<>();
     }
 
-    public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender, Human children) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.dod = dod;
-        this.childsArray.add(children);
-        this.gender = gender;
-    }
-
-    public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender, Human... children) {
+    public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother) {
         this(firstName, lastName, dob, dod, gender);
-        for (Human child : children) {
-            this.childsArray.add(child);
+
+        if(father != null) {
+            this.parentsArray.add(father);
         }
+        if(mother != null) {
+            this.parentsArray.add(mother);
+        }
+
     }
 
-    public void addChildren(Human children) {
-        this.childsArray.add(children);
-    }
+    public Human(String firstName, String lastName, LocalDate dob, LocalDate dod, Gender gender, Human father, Human mother, Human... children) {
+        this(firstName, lastName, dob, dod, gender, father, mother);
 
-    public void setDod(LocalDate dod) {
-        this.dod = dod;
+        if(children != null){
+            for (Human child : children) {
+                this.childsArray.add(child);
+            }
+        }
     }
 
 
@@ -50,21 +49,17 @@ public class Human {
         return firstName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public void addChilds(Human... childs) {
+        for (Human ch : childs) {
+            this.childsArray.add(ch);
+        }
+
+
+    }
+    public void addParent(Human parent) {
+        this.childsArray.add(parent);
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public LocalDate getDod() {
-        return dod;
-    }
 
     public List<Human> getChildsArray() {
         return childsArray;
@@ -75,6 +70,16 @@ public class Human {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("\n" + firstName + " " + lastName + ", " + gender + ", " + " (" + dob + " - " + dod + ")");
+        if (parentsArray.isEmpty()!=true){
+            str.append("\nParents: \n");
+            for (int i = 0; i < parentsArray.size(); i++) {
+
+                if (i == parentsArray.size()-1){
+                    str.append(parentsArray.get(i).firstName).append(" ").append(parentsArray.get(i).lastName);
+                }
+                else str.append(parentsArray.get(i).firstName).append(" ").append(parentsArray.get(i).lastName).append(", ");
+            }
+        }
         if (childsArray.isEmpty()!=true){
             str.append("\nChilds: \n");
             for (int i = 0; i < childsArray.size(); i++) {
