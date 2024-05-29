@@ -1,5 +1,6 @@
 package ru.gb.family_tree;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import static ru.gb.family_tree.Gender.Male;
 public class Main {
     public static void main(String[] args) {
         FamilyTree familyTree = new FamilyTree();
+        String filePath = "src\\ru\\gb\\family_tree\\tree.txt";
+
         Human human1 = new Human("Maria", "Pushkin", LocalDate.of(1700, 2, 25), LocalDate.of(1790, 5, 3), Female);
         Human human2 = new Human("Pavel", "Pushkin", LocalDate.of(1695, 8, 15), LocalDate.of(1790, 5, 3), Male);
         Human human3 = new Human("Alexander", "Pushkin", LocalDate.of(1730, 5, 21), LocalDate.of(1767, 11, 4), Male, human1, human2);
@@ -30,8 +33,22 @@ public class Main {
         familyTree.addHumansInFamTree(human1, human2, human3, human4
                 , human5, human6, human7, human8, human9);
 
+//        familyTree = load(filePath);
 
         System.out.println(familyTree);
 
+        save(familyTree, filePath);
+    }
+
+
+    private static FamilyTree load(String filePath){
+        Writeable writeable = new FileHandler();
+        return (FamilyTree) writeable.read(filePath);
+    }
+
+
+    private static void save(FamilyTree familyTree, String filePath){
+        Writeable writeable = new FileHandler();
+        writeable.save(familyTree, filePath);
     }
 }
